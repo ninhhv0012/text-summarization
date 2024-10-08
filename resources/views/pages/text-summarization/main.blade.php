@@ -59,7 +59,7 @@ Tóm tắt Văn bản
 
                         <div class="fv-row mb-7">
                             <label class="fs-6 fw-bold mb-2">Nhập văn bản</label>
-                            <textarea class="form-control form-control-solid" rows="10" name="text">{{ isset($text) ? $text : "ok la" }}</textarea>
+                            <textarea class="form-control form-control-solid" rows="10" name="text">{{ isset($text) ? $text : "" }}</textarea>
                         </div>
                         {{-- end input text erea --}}
                         {{-- button submit --}}
