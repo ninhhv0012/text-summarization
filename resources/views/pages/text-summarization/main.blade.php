@@ -64,7 +64,11 @@ Tóm tắt Văn bản
                         {{-- end input text erea --}}
                         {{-- button submit --}}
                         <div class="d-flex justify-content-end">
+                            @if($device->code == 'tung2024')
                             <button type="submit" class="btn btn-primary">Tóm tắt</button>
+                            @else
+                            <button type="submit" class="btn btn-primary" disabled>Tóm tắt</button>
+                            @endif
                         </div>
                         {{-- end button submit --}}
 
