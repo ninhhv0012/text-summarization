@@ -836,10 +836,10 @@
                 @foreach($summaries as $summary)
                     <a href="{{ route('summary.show', ['id' => $summary->id]) }}"
                        class="d-flex align-items-center px-4 py-3 rounded hover-bg-light-primary">
-    <span class="fs-6 text-white-800 text-hover-primary">
+    <span class="fs-6 text-white-800 text-hover-primary" style="color: white; ">
         @php
             $words = explode(' ', $summary->summary); // Split the text into words
-            $limitedWords = implode(' ', array_slice($words, 0, 5)); // Get the first 5 words
+            $limitedWords = implode(' ', array_slice($words, 0, 9)); // Get the first 5 words
         @endphp
 
         {{ $limitedWords }}{{ count($words) > 5 ? '...' : '' }}

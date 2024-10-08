@@ -13,7 +13,6 @@ class TextSummarizationController extends Controller
     // index
     public function index()
     {
-
         return view('pages.text-summarization.main');
     }
 
@@ -45,8 +44,7 @@ class TextSummarizationController extends Controller
         }
 
         $text = $request->input('text');
-     //   $summarizedText = $this->summarizeText($text);
-        $summarizedText = "ok la";
+        $summarizedText = $this->summarizeText($text);
 
         $summary = Summary::create([
             'text' => $text,
@@ -55,7 +53,6 @@ class TextSummarizationController extends Controller
         $summary->save();
         //redirect to the same page with the summarized text
         return  redirect()->route('text-summarization', ['text' => $text, 'summarizedText' => $summarizedText]);
-      //  return view('pages.text-summarization.main', compact('text','summarizedText'));
     }
 
     // summarize text
@@ -63,7 +60,7 @@ class TextSummarizationController extends Controller
     {
         $url = Config::first()->url;
         $response = $this->sendHttpRequest($url, 'POST', [], ['text' => $text]);
-        return $response['data'];
+        return $response['summary'];
     }
 
     function sendHttpRequest($url, $method = 'GET', $params = [], $body = [], $headers = [])

@@ -21,7 +21,7 @@ class TextSummaryDataProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //get summary order by created_at and limit 10
+       // get summary order by created_at and limit 10
         $summaries = Summary::orderBy('created_at', 'desc')->limit(10)->get();
         view()->share('summaries', $summaries);
     }
