@@ -33,3 +33,7 @@ Route::post('/text-summarization/summarize', [TextSummarizationController::class
 Route::get('/config', [TextSummarizationController::class, 'config'])->name('config');
 Route::post('/config', [TextSummarizationController::class, 'configUpdate'])->name('config.update');
 
+// summary
+Route::get('/device', [TextSummarizationController::class, 'device'])->name('device');
+Route::post('/device', [TextSummarizationController::class, 'deviceStore'])->name('device.store');
+

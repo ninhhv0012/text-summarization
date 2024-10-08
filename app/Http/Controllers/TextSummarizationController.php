@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use GuzzleHttp\Client;
 
 use Illuminate\Support\Facades\Validator;
 use App\Models\Config;
+use App\Models\Device;
 use App\Models\Summary;
 class TextSummarizationController extends Controller
 {
@@ -52,7 +54,7 @@ class TextSummarizationController extends Controller
         ]);
         $summary->save();
         //redirect to the same page with the summarized text
-        return  redirect()->route('text-summarization', ['text' => $text, 'summarizedText' => $summarizedText]);
+        return view('pages.text-summarization.main', ['text' => $text, 'summarizedText' => $summarizedText]);
     }
 
     // summarize text
@@ -92,6 +94,23 @@ class TextSummarizationController extends Controller
             'url' => $url,
         ]);
         $config->save();
+        return redirect()->route('text-summarization');
+    }
+
+    //device
+    public function device()
+    {
+        return view('device');
+    }
+
+    public function deviceStore(Request $request)
+    {
+        $device = $request->input('device');
+
+        //get ip address
+        $ip = $request->ip();
+        //update with ip address
+        $device = Device::where('ip', $ip)->update(['code' => $device]);
         return redirect()->route('text-summarization');
     }
 }
