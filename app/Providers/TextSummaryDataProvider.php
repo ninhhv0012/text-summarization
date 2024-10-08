@@ -24,7 +24,7 @@ class TextSummaryDataProvider extends ServiceProvider
     public function boot(): void
     {
        // get summary order by created_at and limit 10
-        $summaries = Summary::orderBy('created_at', 'desc')->limit(10)->get();
+        $summaries = Summary::orderBy('updated_at', 'desc')->limit(10)->get();
 
         // get device order by ip
         $ip = Request::ip();

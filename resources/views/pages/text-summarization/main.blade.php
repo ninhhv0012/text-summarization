@@ -1,8 +1,8 @@
 @extends('layout.header')
 @section('breadcrumb')
-<div class="page-title d-flex flex-column me-5">
+<div class="page-title d-flex flex-column me-5" >
     <!--begin::Title-->
-    <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Tóm tắt Văn bản</h1>
+    <p class="d-flex flex-column text-dark fw-bolder fs-3 mb-0" style="font-size: 30px !important; font-family: initial;"> TRÍCH CHỌN VĂN BẢN</p>
     <!--end::Title-->
     <!--begin::Breadcrumb-->
     <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
@@ -15,7 +15,7 @@
         </li>
         <!--end::Item-->
         <!--begin::Item-->
-        <li class="breadcrumb-item text-dark">Tóm tắt Văn bản</li>
+
         <!--end::Item-->
     </ul>
     <!--end::Breadcrumb-->
@@ -23,7 +23,6 @@
 @endsection
 @extends('layout.index')
 @section('title')
-Tóm tắt Văn bản
 @endsection
 @section('css')
 <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
@@ -56,16 +55,18 @@ Tóm tắt Văn bản
                         @csrf
                        {{-- input text erea --}}
 
+                        @if (isset($id))
+                         <input type="hidden" name="id" value="{{$id}}">
+                        @endif
 
-                        <div class="fv-row mb-7">
-                            <label class="fs-6 fw-bold mb-2">Nhập văn bản</label>
-                            <textarea class="form-control form-control-solid" rows="10" name="text">{{ isset($text) ? $text : "" }}</textarea>
+                        <div class="fv-row mb-7" style="margin-top: 20px;">
+                            <textarea class="form-control form-control-solid" rows="12" name="text" placeholder="Nhập văn bản....">{{ isset($text) ? $text : "" }}</textarea>
                         </div>
                         {{-- end input text erea --}}
                         {{-- button submit --}}
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end" style="justify-content:center !important">
                             @if($device->code == 'tung2024')
-                            <button type="submit" class="btn btn-primary">Tóm tắt</button>
+                            <button type="submit" class="btn btn-primary" >Xử lý văn bản</button>
                             @endif
                         </div>
                         {{-- end button submit --}}
@@ -79,18 +80,18 @@ Tóm tắt Văn bản
             <!--Area to show the result of summary-->
             <div class="card">
                 <!--begin::Card header-->
-                <div class="card-header border-0">
-                    <h3 class="card-title
-                    fw-bolder text-dark">Kết quả tóm tắt</h3>
-                </div>
                 <!--begin::Card body-->
                 @if(isset($summarizedText))
-                <div class="card-body pt-0">
+                <div class="card-body pt-0" style="margin-bottom: -28px !important;">
                     <div class="fv-row mb-7">
-                        <label class="fs-6 fw-bold mb-2">Văn bản tóm tắt</label>
-                        <textarea class="form-control form-control-solid" rows="5" name="text">{{$summarizedText}}</textarea>
+                        <textarea class="form-control form-control-solid" rows="2" name="text">{{$summarizedText}}</textarea>
                     </div>
                 </div>
+                @else
+                <div class="card-body pt-0"  style="margin-bottom: -28px !important;">
+                    <div class="fv-row mb-7">
+                        <textarea class="form-control form-control-solid" rows="1" name="text" placeholder="Kết quả trích chọn văn bản..." disabled></textarea>
+                    </div>
                 @endif
                 <!--end::Card body-->
             </div>

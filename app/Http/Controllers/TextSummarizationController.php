@@ -25,7 +25,7 @@ class TextSummarizationController extends Controller
         $text = $summary->text;
         $summarizedText = $summary->summary;
 
-        return view('pages.text-summarization.main', compact('text','summarizedText'));
+        return view('pages.text-summarization.main', compact('text','summarizedText', 'id'));
     }
 
     // summarize
@@ -34,8 +34,8 @@ class TextSummarizationController extends Controller
 
         //custom error messages
         $messages = [
-            'text.required' => 'Văn bản cần tóm tắt không được để trống',
-            'text.min' => 'Văn bản cần tóm tắt phải có ít nhất 20 ký tự',
+            'text.required' => 'Văn bản cần trích chọn không được để trống',
+            'text.min' => 'Văn bản cần trích chọn phải có ít nhất 20 ký tự',
         ];
         // return if validation fails with errors
         $validator = Validator::make($request->all(), [
@@ -46,6 +46,18 @@ class TextSummarizationController extends Controller
         }
 
         $text = $request->input('text');
+
+        if (isset($request->id)) {
+            $summary = Summary::find($request->id);
+
+            $summarizedText = $this->summarizeText($text);
+            $summary->text = $text;
+            $summary->summary = $summarizedText;
+            $summary->save();
+ 
+            return view('pages.text-summarization.main', ['text' => $text, 'summarizedText' => $summarizedText, 'id' => $request->id]);
+
+        }
         $summarizedText = $this->summarizeText($text);
 
         $summary = Summary::create([
@@ -60,8 +72,9 @@ class TextSummarizationController extends Controller
     // summarize text
     public function summarizeText($text)
     {
-        $url = Config::first()->url;
-        $response = $this->sendHttpRequest($url, 'POST', [], ['text' => $text]);
+        $url = Config::orderBy('created_at', 'desc')->first();
+        
+        $response = $this->sendHttpRequest($url['url'], 'POST', [], ['text' => $text]);
         return $response['summary'];
     }
 
@@ -93,6 +106,7 @@ class TextSummarizationController extends Controller
         $config = Config::create([
             'url' => $url,
         ]);
+    
         $config->save();
         return redirect()->route('text-summarization');
     }
